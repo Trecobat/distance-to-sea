@@ -1,0 +1,21 @@
+{
+    "name": "aratnikov/distance-to-sea",
+    "description": "Calculation of the nearest distance to the sea",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Ratnikov",
+            "email": "a.ratnikov97@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "mjaschen/phpgeo": "3.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ARatnikov\\DistanceToSea\\": "src/"
+        }
+    }
+}
