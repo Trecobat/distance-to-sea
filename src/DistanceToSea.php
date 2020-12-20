@@ -14,7 +14,7 @@ use Location\Distance\Vincenty;
  */
 class DistanceToSea
 {
-    const SEAS = ['sea_of_azov', 'black_sea', 'caspean_sea', 'baltic_sea'];
+    public const SEAS = ['sea_of_azov', 'black_sea', 'caspean_sea', 'baltic_sea'];
 
     /**
      * @var DistanceToSea|null
@@ -38,7 +38,7 @@ class DistanceToSea
     private function __construct()
     {
         foreach (static::SEAS as $sea) {
-            $this->polygons[$sea] = $this->_preparePolygonOfSea($sea);
+            $this->polygons[$sea] = $this->preparePolygonOfSea($sea);
         }
     }
 
@@ -52,9 +52,9 @@ class DistanceToSea
      * @param float $lng - долгота
      * @return array
      */
-    public function calculateToSea(string $nameSea, float $lat, float $lng)
+    public function calculateToSea(string $nameSea, float $lat, float $lng): array
     {
-        return $this->_getMinDistanceToSea($lat, $lng, $nameSea);
+        return $this->getMinDistanceToSea($lat, $lng, $nameSea);
     }
 
     /**
@@ -63,15 +63,15 @@ class DistanceToSea
      * @param float $lng - долгота
      * @return array
      */
-    public function calculateToNearestSea(float $lat, float $lng)
+    public function calculateToNearestSea(float $lat, float $lng): array
     {
         $minDistance = PHP_INT_MAX;
 
         $result = [];
-        foreach($this->polygons as $nameSea => $coordinates) {
-            $distanceToSeas = $this->_getMinDistanceToSea($lat, $lng, $nameSea);
+        foreach ($this->polygons as $nameSea => $coordinates) {
+            $distanceToSeas = $this->getMinDistanceToSea($lat, $lng, $nameSea);
 
-            if ($minDistance > $distanceToSeas['distance']){
+            if ($minDistance > $distanceToSeas['distance']) {
                 $result = $distanceToSeas;
             }
         }
@@ -86,18 +86,18 @@ class DistanceToSea
      * @param float $lng - долгота
      * @return array
      */
-    private function _getMinDistanceToSea(string $nameSea, float $lat, float $lng)
+    private function getMinDistanceToSea(string $nameSea, float $lat, float $lng): array
     {
         $minDistance = PHP_INT_MAX;
 
         $nearestCoordinates = [];
-        foreach($this->polygons[$nameSea] as list($pLng, $pLat)){
+        foreach ($this->polygons[$nameSea] as list($pLng, $pLat)) {
             $coordinate1 = new Coordinate($lat, $lng);
             $coordinate2 = new Coordinate($pLat, $pLng);
 
             $distance = (new Vincenty())->getDistance($coordinate1, $coordinate2);
 
-            if ($minDistance > $distance){
+            if ($minDistance > $distance) {
                 $minDistance = $distance;
                 $nearestCoordinates = [$pLat, $pLng];
             }
@@ -115,16 +115,16 @@ class DistanceToSea
      * @param string $name название моря
      * @return array
      */
-    private function _preparePolygonOfSea($name)
+    private function preparePolygonOfSea(string $name): array
     {
-        $path = dirname(__DIR__)."/data/{$name}.json";
-        $coordinates = json_decode(file_get_contents($path), true);
+        $path = dirname(__DIR__) . "/data/{$name}.json";
+        $data = json_decode(file_get_contents($path), true);
+        $coordinates = (array)$data['geometries'][0]['coordinates'];
 
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator((array)$coordinates['geometries'][0]['coordinates']));
+        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($coordinates));
 
         $result = [];
-        foreach($iterator as $value){
+        foreach ($iterator as $value) {
             $result[] = (array)$iterator->getInnerIterator();
             $iterator->next();
         }
