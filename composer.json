@@ -1,6 +1,6 @@
 {
     "name": "aratnikov/distance-to-sea",
-    "description": "Calculation of the nearest distance to the sea",
+    "description": "Calculation of the nearest distance to the seas: Azov, Baltic, Caspian and Black",
     "license": "MIT",
     "authors": [
         {
