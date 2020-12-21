@@ -17,7 +17,7 @@ composer require aratnikov/distance-to-sea
 ```php
 <?php
 
-use ARatnikov\DistanceToSea\Calculating;
+use ARatnikov\DistanceToSea\{Calculating, Seas};
 
 $calculating = Calculating::getInstance();
 
@@ -28,7 +28,7 @@ $lng = 34.145802750750015;
 $result = $calculating->calculateToNearestSea($lat, $lng);
 
 //or to a certain sea
-$result = $calculating->calculateToSea(Calculating::BLACK_SEA, $lat, $lng);
+$result = $calculating->calculateToSea(Seas::BLACK_SEA, $lat, $lng);
 
 echo "To the {$result->getSeaName()} {$result->getDistance()} meters"; // To the black_sea 700 meters
 ```

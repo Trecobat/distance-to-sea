@@ -12,11 +12,6 @@ use Location\Distance\Vincenty;
  */
 class Calculating
 {
-    public const SEA_OF_AZOV = 'sea_of_azov';
-    public const BLACK_SEA = 'black_sea';
-    public const CASPIAN_SEA = 'caspian_sea';
-    public const BALTIC_SEA = 'baltic_sea';
-    public const SEAS = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA];
 
     /**
      * @var Calculating|null
@@ -39,7 +34,7 @@ class Calculating
 
     private function __construct()
     {
-        foreach (static::SEAS as $sea) {
+        foreach (Seas::ALL as $sea) {
             $this->polygons[$sea] = $this->preparePolygonOfSea($sea);
         }
     }
