@@ -16,9 +16,9 @@ class DistanceToSea
 {
     public const SEA_OF_AZOV = 'sea_of_azov';
     public const BLACK_SEA = 'black_sea';
-    public const CASPEAN_SEA = 'caspean_sea';
+    public const CASPIAN_SEA = 'caspian_sea';
     public const BALTIC_SEA = 'baltic_sea';
-    public const SEAS = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPEAN_SEA, self::BALTIC_SEA];
+    public const SEAS = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA];
 
     /**
      * @var DistanceToSea|null
