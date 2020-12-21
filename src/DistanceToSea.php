@@ -60,7 +60,7 @@ class DistanceToSea
      */
     public function calculateToSea(string $nameSea, float $lat, float $lng): array
     {
-        return $this->getMinDistanceToSea($lat, $lng, $nameSea);
+        return $this->getMinDistanceToSea($nameSea, $lat, $lng);
     }
 
     /**
@@ -75,7 +75,7 @@ class DistanceToSea
 
         $result = [];
         foreach ($this->polygons as $nameSea => $coordinates) {
-            $distanceToSeas = $this->getMinDistanceToSea($lat, $lng, $nameSea);
+            $distanceToSeas = $this->getMinDistanceToSea($nameSea, $lat, $lng);
 
             if ($minDistance > $distanceToSeas['distance']) {
                 $result = $distanceToSeas;
