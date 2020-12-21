@@ -16,18 +16,18 @@ composer require aratnikov/distance-to-sea
 ```php
 <?php
 
-use ARatnikov\DistanceToSea\DistanceToSea;
+use ARatnikov\DistanceToSea\CalculatingDistanceToSea;
 
-$distanceToSea = DistanceToSea::getInstance();
+$calculating = CalculatingDistanceToSea::getInstance();
 
 $lat = 44.47755606247829;
 $lng = 34.145802750750015;
 
 //to the nearest sea
-$result = $distanceToSea->calculateToNearestSea($lat, $lng);
+$result = $calculating->calculateToNearestSea($lat, $lng);
 
 //or to a certain sea
-$result = $distanceToSea->calculateToSea(DistanceToSea::BLACK_SEA, $lat, $lng);
+$result = $calculating->calculateToSea(CalculatingDistanceToSea::BLACK_SEA, $lat, $lng);
 
 echo "To the {$result['name']} {$result['distance']} meters"; // To the black_sea 700 meters
 ```

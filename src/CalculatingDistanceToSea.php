@@ -10,7 +10,7 @@ use Location\Distance\Vincenty;
  *
  * @author Andrey Ratnikov <a.ratnikov97@gmail.com>
  */
-class DistanceToSea
+class CalculatingDistanceToSea
 {
     public const SEA_OF_AZOV = 'sea_of_azov';
     public const BLACK_SEA = 'black_sea';
@@ -19,7 +19,7 @@ class DistanceToSea
     public const SEAS = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA];
 
     /**
-     * @var DistanceToSea|null
+     * @var CalculatingDistanceToSea|null
      */
     private static $instance = null;
 
@@ -28,7 +28,7 @@ class DistanceToSea
      */
     private $polygons;
 
-    public static function getInstance(): DistanceToSea
+    public static function getInstance(): CalculatingDistanceToSea
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -64,7 +64,7 @@ class DistanceToSea
     }
 
     /**
-     * Рассчитать ближайшее расстоние до ближайшего моря
+     * Рассчитать ближайшее расстояние до ближайшего моря
      * @param float $lat - широта
      * @param float $lng - долгота
      * @return array
