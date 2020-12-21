@@ -72,6 +72,7 @@ class Calculating
             $distanceToSeas = $this->calculateNearestDistanceToSea($nameSea, $lat, $lng);
 
             if ($minDistance > $distanceToSeas->getDistance()) {
+                $minDistance = $distanceToSeas->getDistance();
                 $result = $distanceToSeas;
             }
         }
@@ -103,7 +104,7 @@ class Calculating
             }
         }
 
-        return new Distance($nameSea, $minDistance, $nearestCoordinates);
+        return new Distance($nameSea, round($minDistance, 1), $nearestCoordinates);
     }
 
     /**
