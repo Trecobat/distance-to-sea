@@ -31,3 +31,7 @@ $result = $distanceToSea->calculateToSea(DistanceToSea::BLACK_SEA, $lat, $lng);
 
 echo "To the {$result['name']} {$result['distance']} meters"; // To the black_sea 700 meters
 ```
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
