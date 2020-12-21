@@ -2,8 +2,6 @@
 
 namespace ARatnikov\DistanceToSea;
 
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
 
@@ -46,8 +44,12 @@ class DistanceToSea
         }
     }
 
-    private function __clone() {}
-    private function __wakeup() {}
+    private function __clone()
+    {
+    }
+    private function __wakeup()
+    {
+    }
 
     /**
      * Рассчитать ближайшее расстояние до определенного моря
@@ -125,7 +127,7 @@ class DistanceToSea
         $data = json_decode(file_get_contents($path), true);
         $coordinates = (array)$data['geometries'][0]['coordinates'];
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($coordinates));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($coordinates));
 
         $result = [];
         foreach ($iterator as $value) {
