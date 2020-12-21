@@ -13,12 +13,13 @@ composer require aratnikov/distance-to-sea
 ```
 
 ## Examples/Usage
+
 ```php
 <?php
 
-use ARatnikov\DistanceToSea\CalculatingDistanceToSea;
+use ARatnikov\DistanceToSea\Calculating;
 
-$calculating = CalculatingDistanceToSea::getInstance();
+$calculating = Calculating::getInstance();
 
 $lat = 44.47755606247829;
 $lng = 34.145802750750015;
@@ -27,9 +28,9 @@ $lng = 34.145802750750015;
 $result = $calculating->calculateToNearestSea($lat, $lng);
 
 //or to a certain sea
-$result = $calculating->calculateToSea(CalculatingDistanceToSea::BLACK_SEA, $lat, $lng);
+$result = $calculating->calculateToSea(Calculating::BLACK_SEA, $lat, $lng);
 
-echo "To the {$result['name']} {$result['distance']} meters"; // To the black_sea 700 meters
+echo "To the {$result->getSeaName()} {$result->getDistance()} meters"; // To the black_sea 700 meters
 ```
 
 ## License

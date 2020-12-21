@@ -10,7 +10,7 @@ use Location\Distance\Vincenty;
  *
  * @author Andrey Ratnikov <a.ratnikov97@gmail.com>
  */
-class CalculatingDistanceToSea
+class Calculating
 {
     public const SEA_OF_AZOV = 'sea_of_azov';
     public const BLACK_SEA = 'black_sea';
@@ -19,7 +19,7 @@ class CalculatingDistanceToSea
     public const SEAS = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA];
 
     /**
-     * @var CalculatingDistanceToSea|null
+     * @var Calculating|null
      */
     private static $instance = null;
 
@@ -28,7 +28,7 @@ class CalculatingDistanceToSea
      */
     private $polygons;
 
-    public static function getInstance(): CalculatingDistanceToSea
+    public static function getInstance(): Calculating
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -56,9 +56,9 @@ class CalculatingDistanceToSea
      * @param string $nameSea - название моря
      * @param float $lat - широта
      * @param float $lng - долгота
-     * @return array
+     * @return Distance
      */
-    public function calculateToSea(string $nameSea, float $lat, float $lng): array
+    public function calculateToSea(string $nameSea, float $lat, float $lng): Distance
     {
         return $this->getMinDistanceToSea($nameSea, $lat, $lng);
     }
@@ -67,9 +67,9 @@ class CalculatingDistanceToSea
      * Рассчитать ближайшее расстояние до ближайшего моря
      * @param float $lat - широта
      * @param float $lng - долгота
-     * @return array
+     * @return Distance
      */
-    public function calculateToNearestSea(float $lat, float $lng): array
+    public function calculateToNearestSea(float $lat, float $lng): Distance
     {
         $minDistance = PHP_INT_MAX;
 
@@ -77,7 +77,7 @@ class CalculatingDistanceToSea
         foreach ($this->polygons as $nameSea => $coordinates) {
             $distanceToSeas = $this->getMinDistanceToSea($nameSea, $lat, $lng);
 
-            if ($minDistance > $distanceToSeas['distance']) {
+            if ($minDistance > $distanceToSeas->getDistance()) {
                 $result = $distanceToSeas;
             }
         }
@@ -90,9 +90,9 @@ class CalculatingDistanceToSea
      * @param string $nameSea - название моря
      * @param float $lat - широта
      * @param float $lng - долгота
-     * @return array
+     * @return Distance
      */
-    private function getMinDistanceToSea(string $nameSea, float $lat, float $lng): array
+    private function getMinDistanceToSea(string $nameSea, float $lat, float $lng): Distance
     {
         $minDistance = PHP_INT_MAX;
 
@@ -109,11 +109,7 @@ class CalculatingDistanceToSea
             }
         }
 
-        return [
-            'name'        => $nameSea,
-            'distance'    => $minDistance,
-            'coordinates' => $nearestCoordinates,
-        ];
+        return new Distance($nameSea, $minDistance, $nearestCoordinates);
     }
 
     /**
