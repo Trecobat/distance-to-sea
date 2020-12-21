@@ -6,13 +6,12 @@ use Location\Coordinate;
 use Location\Distance\Vincenty;
 
 /**
- * Расчет ближайшего расстояния от точки до моря
+ * Calculation of the nearest distance to the sea
  *
  * @author Andrey Ratnikov <a.ratnikov97@gmail.com>
  */
 class Calculating
 {
-
     /**
      * @var Calculating|null
      */
@@ -47,21 +46,21 @@ class Calculating
     }
 
     /**
-     * Рассчитать ближайшее расстояние до определенного моря
-     * @param string $nameSea - название моря
-     * @param float $lat - широта
-     * @param float $lng - долгота
+     * Calculate to the sea
+     * @param string $nameSea
+     * @param float $lat
+     * @param float $lng
      * @return Distance
      */
     public function calculateToSea(string $nameSea, float $lat, float $lng): Distance
     {
-        return $this->getMinDistanceToSea($nameSea, $lat, $lng);
+        return $this->calculateNearestDistanceToSea($nameSea, $lat, $lng);
     }
 
     /**
-     * Рассчитать ближайшее расстояние до ближайшего моря
-     * @param float $lat - широта
-     * @param float $lng - долгота
+     * Calculate to the nearest sea
+     * @param float $lat
+     * @param float $lng
      * @return Distance
      */
     public function calculateToNearestSea(float $lat, float $lng): Distance
@@ -70,7 +69,7 @@ class Calculating
 
         $result = [];
         foreach ($this->polygons as $nameSea => $coordinates) {
-            $distanceToSeas = $this->getMinDistanceToSea($nameSea, $lat, $lng);
+            $distanceToSeas = $this->calculateNearestDistanceToSea($nameSea, $lat, $lng);
 
             if ($minDistance > $distanceToSeas->getDistance()) {
                 $result = $distanceToSeas;
@@ -81,13 +80,13 @@ class Calculating
     }
 
     /**
-     * Получить ближайшее расстояние до моря
-     * @param string $nameSea - название моря
-     * @param float $lat - широта
-     * @param float $lng - долгота
+     * Calculate the nearest distance to the sea
+     * @param string $nameSea
+     * @param float $lat
+     * @param float $lng
      * @return Distance
      */
-    private function getMinDistanceToSea(string $nameSea, float $lat, float $lng): Distance
+    private function calculateNearestDistanceToSea(string $nameSea, float $lat, float $lng): Distance
     {
         $minDistance = PHP_INT_MAX;
 
@@ -108,8 +107,8 @@ class Calculating
     }
 
     /**
-     * Получить координаты береговой границы моря (тип GeoJson: GeometryCollection)
-     * @param string $name название моря
+     * Prepare the sea polygon (GeoJson: GeometryCollection)
+     * @param string $name
      * @return array
      */
     private function preparePolygonOfSea(string $name): array
