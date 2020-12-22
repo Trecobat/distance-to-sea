@@ -1,11 +1,15 @@
 {
     "name": "aratnikov/distance-to-sea",
     "description": "Calculation of the nearest distance to the seas: Azov, Baltic, Caspian and Black",
+    "type": "library",
+    "keywords": ["distance", "seas", "sea", "point", "calculation", "baltic", "black", "azov", "caspian"],
+    "readme": "README.md",
     "license": "MIT",
     "authors": [
         {
             "name": "Andrey Ratnikov",
-            "email": "a.ratnikov97@gmail.com"
+            "email": "a.ratnikov97@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
