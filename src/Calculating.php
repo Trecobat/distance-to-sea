@@ -41,9 +41,6 @@ class Calculating
     private function __clone()
     {
     }
-    private function __wakeup()
-    {
-    }
 
     /**
      * Calculate to the sea
