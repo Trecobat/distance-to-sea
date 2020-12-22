@@ -2,7 +2,7 @@
 Calculation of the nearest distance to the seas: Azov, Baltic, Caspian and Black.
 
 ## Requirements
-Minimum required PHP version is 7.2.
+Minimum required PHP version is 7.3.
 
 ## Installation
 
