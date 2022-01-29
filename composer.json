@@ -15,7 +15,7 @@
     "require": {
         "php": ">=7.3",
         "ext-json": "*",
-        "mjaschen/phpgeo": "3.2.*"
+        "mjaschen/phpgeo": "^4.0"
     },
     "autoload": {
         "psr-4": {
