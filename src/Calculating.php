@@ -2,6 +2,7 @@
 
 namespace ARatnikov\DistanceToSea;
 
+use Iterator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
 
@@ -17,12 +18,7 @@ class Calculating
      */
     private static $instance = null;
 
-    /**
-     * @var array
-     */
-    private $polygons;
-
-    public static function getInstance(): Calculating
+    public static function getInstance(): self
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -33,9 +29,6 @@ class Calculating
 
     private function __construct()
     {
-        foreach (Seas::ALL as $sea) {
-            $this->polygons[$sea] = $this->preparePolygonOfSea($sea);
-        }
     }
 
     private function __clone()
@@ -65,12 +58,12 @@ class Calculating
         $minDistance = PHP_INT_MAX;
 
         $result = [];
-        foreach ($this->polygons as $nameSea => $coordinates) {
-            $distanceToSeas = $this->calculateNearestDistanceToSea($nameSea, $lat, $lng);
+        foreach (Seas::ALL as $sea) {
+            $distanceToSea = $this->calculateNearestDistanceToSea($sea, $lat, $lng);
 
-            if ($minDistance > $distanceToSeas->getDistance()) {
-                $minDistance = $distanceToSeas->getDistance();
-                $result = $distanceToSeas;
+            if ($minDistance > $distanceToSea->getDistance()) {
+                $minDistance = $distanceToSea->getDistance();
+                $result = $distanceToSea;
             }
         }
 
@@ -89,7 +82,7 @@ class Calculating
         $minDistance = PHP_INT_MAX;
 
         $nearestCoordinates = [];
-        foreach ($this->polygons[$nameSea] as list($pLng, $pLat)) {
+        foreach ($this->preparePolygonOfSea($nameSea) as [$pLng, $pLat]) {
             $coordinate1 = new Coordinate($lat, $lng);
             $coordinate2 = new Coordinate($pLat, $pLng);
 
@@ -107,22 +100,19 @@ class Calculating
     /**
      * Prepare the sea polygon (GeoJson: GeometryCollection)
      * @param string $name
-     * @return array
+     * @return Iterator
      */
-    private function preparePolygonOfSea(string $name): array
+    private function preparePolygonOfSea(string $name): Iterator
     {
-        $path = dirname(__DIR__) . "/data/{$name}.json";
+        $path = dirname(__DIR__) . "/data/$name.json";
         $data = json_decode(file_get_contents($path), true);
         $coordinates = (array)$data['geometries'][0]['coordinates'];
 
         $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($coordinates));
 
-        $result = [];
-        foreach ($iterator as $value) {
-            $result[] = (array)$iterator->getInnerIterator();
+        foreach ($iterator as $ignored) {
+            yield (array)$iterator->getInnerIterator();
             $iterator->next();
         }
-
-        return $result;
     }
 }
