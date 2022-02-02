@@ -5,6 +5,7 @@ namespace ARatnikov\DistanceToSea;
 use Iterator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
+use UnexpectedValueException;
 
 /**
  * Calculation of the nearest distance to the sea
@@ -40,10 +41,17 @@ class Calculating
      * @param string $nameSea
      * @param float $lat
      * @param float $lng
+     * @throws UnexpectedValueException
      * @return Distance
      */
     public function calculateToSea(string $nameSea, float $lat, float $lng): Distance
     {
+        if (!in_array($nameSea, Seas::ALL)) {
+            throw new UnexpectedValueException('Calculation is not available for this sea.');
+        }
+
+        CoordinateValidator::validate($lat, $lng);
+
         return $this->calculateNearestDistanceToSea($nameSea, $lat, $lng);
     }
 
@@ -55,9 +63,11 @@ class Calculating
      */
     public function calculateToNearestSea(float $lat, float $lng): Distance
     {
-        $minDistance = PHP_INT_MAX;
+        CoordinateValidator::validate($lat, $lng);
 
-        $result = [];
+        $minDistance = PHP_INT_MAX;
+        $result = null;
+
         foreach (Seas::ALL as $sea) {
             $distanceToSea = $this->calculateNearestDistanceToSea($sea, $lat, $lng);
 
