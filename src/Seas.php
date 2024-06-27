@@ -13,5 +13,6 @@ class Seas
     public const BLACK_SEA = 'black_sea';
     public const CASPIAN_SEA = 'caspian_sea';
     public const BALTIC_SEA = 'baltic_sea';
-    public const ALL = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA];
+    public const FRANCE_SEA = 'france_sea';
+    public const ALL = [self::SEA_OF_AZOV, self::BLACK_SEA, self::CASPIAN_SEA, self::BALTIC_SEA, self::FRANCE_SEA];
 }
