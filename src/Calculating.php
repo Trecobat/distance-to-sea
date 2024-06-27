@@ -1,6 +1,6 @@
 <?php
 
-namespace ARatnikov\DistanceToSea;
+namespace Trecobat\DistanceToSea;
 
 use Iterator;
 use Location\Coordinate;

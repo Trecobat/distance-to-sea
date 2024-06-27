@@ -9,7 +9,7 @@ Minimum required PHP version is 7.3.
 Using [Composer](https://getcomposer.org), just add it to your `composer.json` by running:
 
 ```
-composer require aratnikov/distance-to-sea 
+composer require trecobat/distance-to-sea 
 ```
 
 ## Examples/Usage
@@ -17,7 +17,7 @@ composer require aratnikov/distance-to-sea
 ```php
 <?php
 
-use ARatnikov\DistanceToSea\{Calculating, Seas};
+use Trecobat\DistanceToSea\{Calculating, Seas};
 
 $calculating = Calculating::getInstance();
 

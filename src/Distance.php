@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARatnikov\DistanceToSea;
+namespace Trecobat\DistanceToSea;
 
 /**
  *
